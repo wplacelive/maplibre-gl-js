@@ -1,20 +1,20 @@
-import {clamp} from '../util/util';
+import { clamp } from '../util/util';
 
-import {ImageSource} from '../source/image_source';
-import {now} from '../util/time_control';
-import {StencilMode} from '../gl/stencil_mode';
-import {DepthMode} from '../gl/depth_mode';
-import {CullFaceMode} from '../gl/cull_face_mode';
-import {rasterUniformValues} from './program/raster_program';
-import {EXTENT} from '../data/extent';
-import {FadingDirections} from '../tile/tile';
 import Point from '@mapbox/point-geometry';
+import { EXTENT } from '../data/extent';
+import { CullFaceMode } from '../gl/cull_face_mode';
+import { DepthMode } from '../gl/depth_mode';
+import { StencilMode } from '../gl/stencil_mode';
+import { ImageSource } from '../source/image_source';
+import { FadingDirections } from '../tile/tile';
+import { now } from '../util/time_control';
+import { rasterUniformValues } from './program/raster_program';
 
-import type {Painter, RenderOptions} from './painter';
-import type {TileManager} from '../tile/tile_manager';
-import type {RasterStyleLayer} from '../style/style_layer/raster_style_layer';
-import type {OverscaledTileID} from '../tile/tile_id';
-import type {Tile} from '../tile/tile';
+import type { RasterStyleLayer } from '../style/style_layer/raster_style_layer';
+import type { Tile } from '../tile/tile';
+import type { OverscaledTileID } from '../tile/tile_id';
+import type { TileManager } from '../tile/tile_manager';
+import type { Painter, RenderOptions } from './painter';
 
 type FadeProperties = {
     parentTile: Tile;
@@ -108,6 +108,9 @@ function drawTiles(
             rasterOpacity === 1 ? DepthMode.ReadWrite : DepthMode.ReadOnly, gl.LESS);
 
         const tile = tileManager.getTile(coord);
+        if (!tile.texture) {
+            continue;
+        }
 
         // create and bind first texture
         context.activeTexture.set(gl.TEXTURE0);
