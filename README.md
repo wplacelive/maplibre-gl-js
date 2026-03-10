@@ -6,6 +6,44 @@
   </picture>
 </p>
 
+# WPlace Fork
+
+This is a fork of [maplibre-gl-js](https://github.com/maplibre/maplibre-gl-js) with WPlace-specific patches.
+
+## Updating to a new upstream release
+
+Example: moving from upstream `v5.19.0` to `v5.20.0`:
+
+```bash
+git fetch upstream
+git checkout wplace/v5.19.0
+git rebase --onto upstream/v5.20.0 upstream/v5.19.0
+git checkout -b wplace/v5.20.0
+```
+
+The rebase takes the WPlace-specific commits (everything after upstream `v5.19.0`) and replays them on top of upstream `v5.20.0`. Update the version in `package.json` if needed, then commit.
+
+## Building
+
+```bash
+npm install
+npm run build-dist
+npm pack
+```
+
+## Publishing
+
+Push a version tag to trigger the GitHub Actions release workflow:
+
+```bash
+git tag vX.Y.Z-wplace.0
+git push origin vX.Y.Z-wplace.0
+```
+
+This builds the package and creates a GitHub Release with the `.tgz` tarball attached.
+
+---
+
 # MapLibre GL JS
 
 [![License](https://img.shields.io/badge/License-BSD_3--Clause-blue.svg?style=flat)](LICENSE.txt) [![Version](https://img.shields.io/npm/v/maplibre-gl?style=flat)](https://www.npmjs.com/package/maplibre-gl) [![CI](https://github.com/maplibre/maplibre-gl-js/actions/workflows/test-all.yml/badge.svg)](https://github.com/maplibre/maplibre-gl-js/actions/workflows/test-all.yml) [![PRs](https://img.shields.io/badge/PRs-welcome-brightgreen.svg?style=flat)](https://opensource.org/licenses/BSD-3-Clause) [![codecov](https://codecov.io/gh/maplibre/maplibre-gl-js/branch/main/graph/badge.svg)](https://codecov.io/gh/maplibre/maplibre-gl-js)
