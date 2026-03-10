@@ -1,23 +1,23 @@
-import {CanonicalTileID} from '../tile/tile_id';
-import {Event, ErrorEvent, Evented} from '../util/evented';
-import {ImageRequest} from '../util/image_request';
-import {ResourceType} from '../util/request_manager';
-import {Texture} from '../render/texture';
-import {MercatorCoordinate} from '../geo/mercator_coordinate';
+import { MercatorCoordinate } from '../geo/mercator_coordinate';
+import { Texture } from '../render/texture';
+import { CanonicalTileID } from '../tile/tile_id';
+import { ErrorEvent, Event, Evented } from '../util/evented';
+import { ImageRequest } from '../util/image_request';
+import { ResourceType } from '../util/request_manager';
 
-import type {Source} from './source';
-import type {CanvasSourceSpecification} from './canvas_source';
-import type {Map} from '../ui/map';
-import type {Dispatcher} from '../util/dispatcher';
-import type {Tile} from '../tile/tile';
+import type Point from '@mapbox/point-geometry';
 import type {
     ImageSourceSpecification,
     VideoSourceSpecification
 } from '@maplibre/maplibre-gl-style-spec';
-import type Point from '@mapbox/point-geometry';
-import {MAX_TILE_ZOOM} from '../util/util';
-import {Bounds} from '../geo/bounds';
-import {isAbortError} from '../util/abort_error';
+import { Bounds } from '../geo/bounds';
+import type { Tile } from '../tile/tile';
+import type { Map } from '../ui/map';
+import { isAbortError } from '../util/abort_error';
+import type { Dispatcher } from '../util/dispatcher';
+import { MAX_TILE_ZOOM } from '../util/util';
+import type { CanvasSourceSpecification } from './canvas_source';
+import type { Source } from './source';
 
 /**
  * Four geographical coordinates,
@@ -248,7 +248,7 @@ export class ImageSource extends Evented implements Source {
 
         // Transform the corner coordinates into the coordinate space of our
         // tile.
-        this.tileCoords = cornerCoords.map((coord) => this.tileID.getTilePoint(coord)._round());
+        this.tileCoords = cornerCoords.map((coord) => this.tileID.getTilePoint(coord));
         this.flippedWindingOrder = hasWrongWindingOrder(this.tileCoords);
 
         this.fire(new Event('data', {dataType: 'source', sourceDataType: 'content'}));
